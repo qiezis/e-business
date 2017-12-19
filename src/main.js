@@ -3,7 +3,10 @@
 import Vue from 'vue'
 import Layout from './components/layout.vue'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
+
 Vue.use(VueRouter)
+Vue.use(VueResource)
 import indexPage from './pages/index'
 let router=new VueRouter({
   mode:'history',
@@ -24,5 +27,5 @@ new Vue({
   el: '#app',
   router,
   template: '<Layout/>',
-  components: { Layout }
+  components: { Layout },
 })

@@ -19,7 +19,7 @@
         <h2>最新消息</h2>
         <ul>
           <li v-for="item in newsList">
-            <a v-bind:href="item.url" class="new-item">{{ item.name }}</a>
+            <a v-bind:href="item.url" class="new-item">{{ item.title }}</a>
           </li>
         </ul>
       </div>
@@ -46,6 +46,18 @@
 </template>
 <script>
 export default{
+  //模拟ajax接口
+  created:function(){
+
+    this.$http.get('/api/getNewsList').then( (res) => {
+
+        console.log(res,12,res.data);
+       this.newsList = res.data.data
+    }, (err) => {
+      console.log(err)
+    })
+  },
+
   data(){
     return {
       msg:'i apple',

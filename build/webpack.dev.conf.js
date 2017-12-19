@@ -11,12 +11,27 @@ const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
+//首先
+const express = require('express');
+const app = express();
+var appData = require('../db.json');
+var getNewsList = appData.getNewsList;
+var login = appData.login;
+var getOrderList = appData.getOrderList;
+var apiRoutes = express.Router();
+app.use('/api', apiRoutes);
+
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
   },
   // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
+
+
+
+
 
   // these devServer options should be customized in /config/index.js
   devServer: {
@@ -35,6 +50,30 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+//找到devServer,添加
+    before(app) {
+      app.get('/api/getNewsList', (req, res) => {
+        res.json({
+          // 这里是你的json内容
+          errno: 0,
+          data: getNewsList
+        })
+      }),
+        app.get('/api/login', (req, res) => {
+          res.json({
+            // 这里是你的json内容
+            errno: 0,
+            data: login
+          })
+        }),
+        app.get('/api/getOrderList', (req, res) => {
+          res.json({
+            // 这里是你的json内容
+            errno: 0,
+            data: getOrderList
+          })
+        })
     }
   },
   plugins: [
