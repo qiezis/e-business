@@ -24,9 +24,10 @@
         </ul>
       </div>
     </div>
-
     <div class="index-right">
 
+
+      <slideshow :slides="slides" :inters="1500" @onchange="dosomethingonchange"></slideshow>
 
       <div class="index-board-list">
         <div class="index-board-item"
@@ -36,7 +37,7 @@
             <h2>{{ item.title }}</h2>
             <p>{{ item.description }}</p>
             <div class="index-board-button">
-              <a href="" class="button">立即购买</a>
+              <a href="#" class="button">立即购买</a>
             </div>
           </div>
         </div>
@@ -45,21 +46,49 @@
   </div>
 </template>
 <script>
+import slideshow from '../components/slideshow.vue'
 export default{
+  components: {
+      slideshow
+    },
   //模拟ajax接口
   created:function(){
-
     this.$http.get('/api/getNewsList').then( (res) => {
-
         console.log(res,12,res.data);
        this.newsList = res.data.data
     }, (err) => {
       console.log(err)
     })
   },
-
+  methods:{
+    dosomethingonchange(){
+      console.log('do some thing')
+    }
+  },
   data(){
     return {
+      slides: [
+           {
+              src: require('../assets/slideShow/pic1.jpg'),
+              title: 'xxx1',
+              href: 'detail/analysis'
+            },
+            {
+              src: require('../assets/slideShow/pic2.jpg'),
+              title: 'xxx2',
+              href: 'detail/count'
+            },
+            {
+              src: require('../assets/slideShow/pic3.jpg'),
+              title: 'xxx3',
+              href: 'http://xxx.xxx.com'
+            },
+            {
+              src: require('../assets/slideShow/pic4.jpg'),
+              title: 'xxx4',
+              href: 'detail/forecast'
+            }
+      ],
       msg:'i apple',
       boardList: [
         {
