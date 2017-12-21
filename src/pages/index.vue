@@ -47,6 +47,7 @@
 </template>
 <script>
 import slideshow from '../components/slideshow.vue'
+
 export default{
   components: {
       slideshow
@@ -62,7 +63,7 @@ export default{
   },
   methods:{
     dosomethingonchange(){
-      console.log('do some thing')
+      //console.log('do some thing')
     }
   },
   data(){
