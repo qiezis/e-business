@@ -5,8 +5,10 @@
           <img src="../assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li @click="logclick"> 登陆</li>
+            <li>{{ name }}</li>
+            <li v-if=" name=='' " @click="logclick"> 登陆</li>
             <li  class="nav-pile">|</li>
+            <li v-if=" ! name=='' " @click="logclick"> 退出</li>
             <li @click="regclick"> 注册</li>
             <li  class="nav-pile">|</li>
             <li @click="aboutclick()">关于</li>
@@ -23,27 +25,32 @@
       <p>© 2016 fishenal MIT</p>
     </div>
     <my-dialog :isshow="isShowLogDialog" @onclose="closedialog('isShowLogDialog')">
-        登录
+        <logForm  @haslog="onsuccess"></logForm>
     </my-dialog>
     <my-dialog :isshow="isShowRegDialog" @onclose="closedialog('isShowRegDialog')">
-        注册
+        <regForm></regForm>
     </my-dialog>
     <my-dialog :isshow="isShowAboutDialog" @onclose="closedialog('isShowAboutDialog')">
-        关于我们
+        <p>本报告在调研数据的基础上，采用定性与定量相结合的方式深入分析了专车市场发展的驱动因素与阻碍因素、专车市场背后的产业格局、专车企业的竞争格局、用户对专车市场的依赖程度、专车对其他交通工具运力的补充效应等，通过这五个章节的研究反映专车市场的发展态势和面临的问题。报告力求客观、深入、准确地反映中国专车市场发展情况，为政府、企事业单位和社会各界提供决策依据。 </p>
     </my-dialog>
   </div>
 </template>
 <script>
 import dialog from './base/dialog'
+import logForm from './logForm'
+import regForm from './regForm'
 export default{
     components:{
-      myDialog:dialog
+      myDialog:dialog,
+      logForm,
+      regForm
     },
     data(){
       return {
         isShowLogDialog:false,
         isShowRegDialog:false,
-        isShowAboutDialog:false
+        isShowAboutDialog:false,
+        name:''
       }
     },
     methods:{
@@ -59,6 +66,12 @@ export default{
       closedialog(attr){
         this[attr]=false
       },
+      onsuccess(data){
+        this.name=data.data.username
+        this.closedialog('isShowLogDialog')   //关闭dialog
+
+
+      }
 
     }
 }
