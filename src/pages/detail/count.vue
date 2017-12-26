@@ -10,7 +10,7 @@
                   产品类型：
               </div>
               <div class="sales-board-line-right">
-
+                 <v-choose  :chooser="buyTypes"></v-choose>
               </div>
           </div>
           <div class="sales-board-line">
@@ -18,7 +18,7 @@
                   适用地区：
               </div>
               <div class="sales-board-line-right">
-                  <Vselection> </Vselection>
+                  <v-selection > </v-selection>
               </div>
           </div>
           <div class="sales-board-line">
@@ -244,10 +244,12 @@
 </template>
 
 <script>
-import Vselection from'../../components/base/selection'
+import vChoose from '../../components/base/chooser'
+import vSelection from '../../components/base/selection'
 export default {
   components:{
-    Vselection
+    vChoose,
+    vSelection
   },
   data () {
     return {

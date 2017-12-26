@@ -10,7 +10,7 @@
                   购买数量：
               </div>
               <div class="sales-board-line-right">
-                  90
+                  <counter></counter>
               </div>
           </div>
           <div class="sales-board-line">
@@ -18,7 +18,7 @@
                   行业：
               </div>
               <div class="sales-board-line-right">
-                  sdfsdf
+                  <v-selection :selections="tradeList" @on-change="getIndex()"></v-selection>
               </div>
           </div>
           <div class="sales-board-line">
@@ -26,7 +26,7 @@
                   产品版本：
               </div>
               <div class="sales-board-line-right">
-                  sdfsdf
+                  <mul-choose :multiplydata="versionList" @onchange=""></mul-choose>
               </div>
           </div>
           <div class="sales-board-line">
@@ -252,9 +252,15 @@
 </template>
 
 <script>
-
+import vSelection from'../../components/base/selection'
+import counter from '../../components/base/counter'
+import mulChoose from '../../components/base/multiplyChooser'
 export default {
-
+  components:{
+    vSelection,
+    counter,
+    mulChoose
+  },
   data () {
     return {
       tradeList: [

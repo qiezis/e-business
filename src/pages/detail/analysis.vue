@@ -10,7 +10,7 @@
                   购买数量：
               </div>
               <div class="sales-board-line-right">
-
+                  <counter></counter>
               </div>
           </div>
           <div class="sales-board-line">
@@ -26,7 +26,7 @@
                   有效时间：
               </div>
               <div class="sales-board-line-right">
-
+                  <v-choose :chooser="periodList"></v-choose>
               </div>
           </div>
           <div class="sales-board-line">
@@ -34,7 +34,7 @@
                   产品版本：
               </div>
               <div class="sales-board-line-right">
-
+                  <mul-choose :multiplydata="buyTypes" @onchange=""></mul-choose>
               </div>
           </div>
           <div class="sales-board-line">
@@ -84,12 +84,19 @@
 
 <script>
 import vSelection from'../../components/base/selection'
+import counter from '../../components/base/counter'
+import vChoose from '../../components/base/chooser'
+import mulChoose from '../../components/base/multiplyChooser'
 export default {
   components:{
-    vSelection
+    vSelection,
+    counter,
+    vChoose,
+    mulChoose
   },
   methods:{
     getIndex(){
+
 
     }
   },
