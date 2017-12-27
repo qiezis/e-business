@@ -30,6 +30,7 @@ export default{
     methods:{
       chooselect(index){
         this.nowIndex=index
+        this.$emit('on-change',this.chooser[index])
       }
     }
 }

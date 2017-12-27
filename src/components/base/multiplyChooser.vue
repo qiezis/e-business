@@ -13,38 +13,8 @@
 </template>
 
 <script>
-
+import _ from 'lodash'
 export default {
-  data (){
-    return{
-        selectedArray:[]
-    }
-  },
-  methods:{
-    multiplyed(index){
-      if(this.selectedArray.indexOf(index) == -1){
-        this.selectedArray.push(index)
-      }else{
-          function removeByValue(arr, val) {
-            for(var i=0; i<arr.length; i++) {
-              if(arr[i] == val) {
-                arr.splice(i, 1);
-                break;
-              }
-            }
-          }
-          removeByValue(this.selectedArray,index);
-      }
-      this.$emit('onchange',this.selectedArray)
-    },
-    checkActive(index){
-      if(this.selectedArray.indexOf(index)){
-
-      }else{
-
-      }
-    },
-  },
   props:{
     multiplydata:{
       type: Array,
@@ -53,7 +23,34 @@ export default {
           value:0
       }
     }
-  }
+  },
+  data (){
+    return{
+        selectedArray:[]
+    }
+  },
+  methods:{
+    multiplyed(index){
+      if(this.selectedArray.indexOf(index) == -1){    //如果没有再数组内，就push
+        this.selectedArray.push(index)
+      }else{                                          //如果数组内存在，就从数组中删除
+          function removeByValue(arr, val) {
+            for(var i=0; i<arr.length; i++) {
+              if(arr[i] == val) {
+                arr.splice(i, 1);
+                break;
+              }
+            }
+          }
+          removeByValue(this.selectedArray,index)
+      }
+      let nowObjectArray=_.map(this.selectedArray,(idx)=>{   //取数组内存在的索引值对应的value值
+          return this.multiplydata[idx]
+      })
+      this.$emit('on-change',nowObjectArray)
+    },
+  },
+
 }
 
 

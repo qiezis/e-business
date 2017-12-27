@@ -18,7 +18,7 @@
                   行业：
               </div>
               <div class="sales-board-line-right">
-                  <v-selection :selections="tradeList" @on-change="getIndex()"></v-selection>
+                  <v-selection :selections="tradeList" @on-change=""></v-selection>
               </div>
           </div>
           <div class="sales-board-line">
@@ -26,7 +26,7 @@
                   产品版本：
               </div>
               <div class="sales-board-line-right">
-                  <mul-choose :multiplydata="versionList" @onchange=""></mul-choose>
+                  <mul-choose :multiplydata="versionList" @on-change=""></mul-choose>
               </div>
           </div>
           <div class="sales-board-line">

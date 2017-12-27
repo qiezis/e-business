@@ -80,7 +80,7 @@ export default {
         if(!this.userErrors.status || !this.passwordErrors.status){
           this.errorText='输入的登陆信息有误'
         }else{
-          this.$http.get('api/login').then((res) => {
+          this.$http.get('/api/login').then((res) => {
             this.$emit('haslog',res.data)
           },(error) => {
 

@@ -1,6 +1,6 @@
 <template>
     <div class="selection-component">
-      <div class="selection-show" @click="toggleDrop()">
+      <div class="selection-show" @click="toggleDrop">
         <span>{{ selections[nowIndex].label }}</span>
         <div class="arrow"></div>
       </div>
@@ -15,29 +15,29 @@
 <script>
 export default {
   props: {
-      selections:{
-          type: Array,
-          default: [{
-              label: 'test',
-              value: 0
-            }]
-      }
+    selections: {
+      type: Array,
+      default: [{
+        label: 'test',
+        value: 0
+      }]
+    }
   },
   data () {
     return {
           isDrop:false,
-          nowIndex:0
+          nowIndex: 0
     }
   },
   methods:{
     toggleDrop(){
-      return this.isDrop=!this.isDrop
+      this.isDrop=!this.isDrop
     },
     chooseSelection(index){
-        this.nowIndex=index
-        this.isDrop=false
-        this.$emit('onChange',this.nowIndex)
 
+        this.nowIndex = index
+        this.isDrop = false
+        this.$emit('on-change',this.selections[this.nowIndex])
     }
   }
 

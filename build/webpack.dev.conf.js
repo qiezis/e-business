@@ -17,6 +17,7 @@ const app = express();
 var appData = require('../db.json');
 var getNewsList = appData.getNewsList;
 var login = appData.login;
+var getprice = appData.getPrice;
 var getOrderList = appData.getOrderList;
 var apiRoutes = express.Router();
 app.use('/api', apiRoutes);
@@ -72,6 +73,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             // 这里是你的json内容
             errno: 0,
             data: getOrderList
+          })
+        }),
+        app.post('/api/getprice', (req, res) => {
+          res.json({
+            // 这里是你的json内容
+            errno: 0,
+            data: getprice
           })
         })
     }

@@ -18,7 +18,7 @@
                   媒介：
               </div>
               <div class="sales-board-line-right">
-                  <mul-choose :multiplydata="versionList" @onchange=""></mul-choose>
+                  <mul-choose :multiplydata="versionList" @on-change=""></mul-choose>
               </div>
           </div>
           <div class="sales-board-line">
