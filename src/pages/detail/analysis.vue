@@ -41,7 +41,7 @@
               </div>
               <div class="sales-board-line-right">
                   <mul-choose
-                    :multiplydata="buyTypes"
+                    :multiplydata="versionList"
                      @on-change="onProgramChange('versions',$event)"
                   ></mul-choose>
               </div>
@@ -85,7 +85,7 @@
           <li>用户所在地理区域分布状况等</li>
         </ul>
       </div>
-      <my-dialog :isshow="isShowErrDialog"  @onclose="hidePayDialog">
+      <my-dialog :isshow="isShowPayDialog"  @onclose="hidePayDialog">
         <table class="buy-dialog-table">
           <tr>
             <th>购买数量</th>
@@ -104,7 +104,20 @@
             <td>{{ price }} </td>
           </tr>
         </table>
+        <h3 class="buy-dialog-title">请选择银行</h3>
+        <bank-chooser @on-change="onChangeBanks">
+          这是bankchooser
+        </bank-chooser>
+        <div class="button buy-dialog-btn" @click="confirmBuy">
+          确认购买
+        </div>
       </my-dialog>
+      <my-dialog :isshow="isShowErrDialog" @on-close="hideErrDialog">
+        支付失败
+      </my-dialog>
+
+
+      <check-order :is-show-check-dialog="isShowCheckOrder"  :order-id="orderId" @on-close-check-dialog="hideCheckOrder"></check-order>
   </div>
 </template>
 
@@ -114,6 +127,9 @@ import counter from '../../components/base/counter'
 import vChoose from '../../components/base/chooser'
 import mulChoose from '../../components/base/multiplyChooser'
 import Dialog from '../../components/base/dialog'
+import bankChooser from '../../components/bankChooser'
+import CheckOrder from '../../components/checkOrder'
+
 import _ from 'lodash'
 export default {
   components:{
@@ -122,6 +138,8 @@ export default {
     vChoose,
     mulChoose,
     MyDialog: Dialog,
+    bankChooser,
+    CheckOrder
   },
   methods:{
     onProgramChange(attr,val){
@@ -146,14 +164,49 @@ export default {
       })
     },
     showPayDialog(){
-      this.isShowErrDialog=true
+      this.isShowPayDialog=true
     },
     hidePayDialog(){
+      this.isShowPayDialog=false
+    },
+    onChangeBanks(bankObj){
+       this.bankId=bankObj.id
+
+    },
+    confirmBuy(){
+      let buyVersionsArray=_.map(this.versions,(item)=>{
+          return item.value
+      })
+      let reqparams={
+          buyNumber : this.buyNum,
+          buyType : this.buyType.value,
+          period : this.period.value,
+          version: buyVersionsArray.join(','),
+          bankId: this.bankId
+      }
+      this.$http.post('/api/createOrder',reqparams).then((res)=>{
+        this.orderId=res.data.data.orderId
+        this.isShowCheckOrder=true
+        this.isShowPayDialog=false
+
+
+      },(error) => {
+        this.isShowErrDialog=true
+        this.isShowBuyDialog=false
+      })
+    },
+    hideErrDialog(){
       this.isShowErrDialog=false
-    }
+    },
+     hideCheckOrder () {
+      this.isShowCheckOrder = false
+    },
+    onChangeBanks (bankObj) {
+      this.bankId = bankObj.id
+    },
   },
-  mounted(){
-      this.buyNumber = 0,
+  mounted(){                   //为了在加载完所有组件后初始化所有元素值
+      this.buyNum = 4,
       this.buyType = this.buyTypes[0]
       this.versions = [this.versionList[0]]
       this.period = this.periodList[0]
@@ -166,6 +219,12 @@ export default {
       versions: [],
       period: {},
       price:0,
+      bankId:0,
+      orderId:0,
+      isShowPayDialog: false,
+      isShowCheckOrder:false,
+      isShowErrDialog: false,
+      isShowBuyDialog:true,
       versionList: [
         {
           label: '客户版',
@@ -208,7 +267,8 @@ export default {
           value: 2
         }
       ],
-       isShowErrDialog: false
+
+
     }
   },
 
